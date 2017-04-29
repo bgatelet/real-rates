@@ -7,5 +7,7 @@ class User < ApplicationRecord
   # Knock needs an authenticate method.
   alias_method :authenticate, :valid_password?
 
+  has_one :list
+
   validates :email, presence: true
 end
