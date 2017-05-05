@@ -2,18 +2,12 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::CurrenciesController, type: :controller do
   let(:user) { create(:user) }
-  let(:currency) { create(:currency) }
+  let(:list) { create(:list, user: user) }
+  let(:currency) { create(:currency, lists: [list]) }
+
   before { sign_in(user) }
 
-  describe "GET #index" do
-    before do
-      get :index, format: :json
-    end
-
-    it { expect(response).to have_http_status(200) }
-  end
-
-  describe "GET #create" do
+  describe "POST #create" do
     context 'when successfully created' do
       before do
         post :create, params: attributes_for(:currency), format: :json
@@ -31,42 +25,39 @@ RSpec.describe Api::V1::CurrenciesController, type: :controller do
     end
   end
 
-  describe "GET #update" do
+  describe "POST #update" do
     context 'when successfully updated' do
       before do
-        patch :update, params: { rate: 1.4 }, format: :json
+        patch :update, params: { id: currency.id, rate: 1.4 }, format: :json
       end
 
       it { expect(response).to have_http_status(200) }
     end
 
     context 'when not updated' do
+      render_views
+
       before do
-        patch :update, params: attributes_for(:currency, :invalid), format: :json
+        patch :update, params: { id: currency.id, code: '' }, format: :json
       end
 
-      it { expect(response).to have_http_status(422) }
+      it { expect(response.body).not_to include("code: ''") }
     end
 
     context 'code should not be updated' do
+      render_views
+      updated_code = FFaker::Currency.code
+
       before do
-        patch :update, params: { code: FFaker::Currency.code }, format: :json
+        patch :update, params: { id: currency.id, code: updated_code }, format: :json
       end
 
-      it { expect(response).to have_http_status(422) }
-    end
-
-    context 'code must exist' do
-      before do
-        patch :update, params: { currency: '' }, format: :json
-      end
-
-      it { expect(response).to have_http_status(422) }
+      it { expect(response.body).not_to include(updated_code) }
     end
 
     context 'rate must exist' do
       before do
-        patch :update, params: { rate: nil }, format: :json
+        patch :update, params: { id: currency.id, rate: nil }, format: :json
       end
 
       it { expect(response).to have_http_status(422) }

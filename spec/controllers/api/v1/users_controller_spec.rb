@@ -2,28 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::UsersController, type: :controller do
   let(:user) { create(:user) }
-  let(:other_user) { create(:user) }
   before { sign_in(user) }
 
-  describe "GET #create" do
-    context 'when successfully created' do
-      before do
-        post :create, params: attributes_for(:user), format: :json
-      end
-
-      it { expect(response).to have_http_status(200) }
-    end
-
-    context 'when not created' do
-      before do
-        post :create, params: attributes_for(:user, :invalid), format: :json
-      end
-
-      it { expect(response).to have_http_status(422) }
-    end
-  end
-
-  describe "GET #update" do
+  describe "POST #update" do
     context 'when successfully updated' do
       before do
         patch :update, params: { password: FFaker::Internet.password }, format: :json
@@ -52,18 +33,20 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   describe "GET #show" do
     context 'user fetched' do
       before do
-        get :show, params: { id: user.id }, format: :json
+        get :show, format: :json
       end
 
       it { expect(response).to have_http_status(200) }
     end
 
-    context 'showing another user denied' do
+    context 'user fetched is current user' do
+      render_views
+
       before do
-        get :show, params: { id: other_user.id }, format: :json
+        get :show, format: :json
       end
 
-      it { expect(response).to have_http_status(422) }
+      it { expect(response.body).to include(user.id) }
     end
   end
 

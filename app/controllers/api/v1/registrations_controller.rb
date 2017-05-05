@@ -3,6 +3,7 @@ class Api::V1::RegistrationsController < ApplicationController
 
   def create
     @user = User.create!(user_params)
+    List.create!(user_id: @user.id)
   end
 
   private
