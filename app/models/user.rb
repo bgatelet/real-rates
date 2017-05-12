@@ -8,6 +8,7 @@ class User < ApplicationRecord
   alias_method :authenticate, :valid_password?
 
   has_one :list
+  accepts_nested_attributes_for :list
 
   validates :email, presence: true
 end

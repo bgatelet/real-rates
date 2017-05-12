@@ -28,6 +28,17 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       it { expect(response).to have_http_status(422) }
     end
+
+    context 'successfully updates list\'s base currency' do
+      before do
+        patch :update, params: { list_attributes: { id: user.list.id, base_currency: "EUR" } }, format: :json
+      end
+
+      it {
+        user.list.reload
+        expect(user.list.base_currency).to eq("EUR")
+      }
+    end
   end
 
   describe "GET #show" do

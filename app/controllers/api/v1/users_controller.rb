@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
   before_action :authenticate
   before_action :set_user, only: [:update, :show]
   respond_to :json
-  
+
   def update
     @user.update!(user_params)
   end
@@ -13,7 +13,7 @@ class Api::V1::UsersController < ApplicationController
   private
 
   def user_params
-    params.permit(:email, :password)
+    params.permit(:email, :password, list_attributes: [:id, :base_currency])
   end
 
   def set_user
