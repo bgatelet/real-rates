@@ -4,7 +4,17 @@ class Api::V1::CurrenciesController < ApplicationController
   respond_to :json
 
   def create
-    @currency = current_user.list.currencies.create!(currency_params)
+    potential_currency = Currency.find_by(code: params[:code])
+
+    if potential_currency != nil
+      if current_user.list.currencies.exists?(potential_currency.id)
+        @currency = potential_currency
+      else
+        ListCurrency.create!(list_id: current_user.list.id, currency_id: potential_currency.id)
+      end
+    else
+      @currency = current_user.list.currencies.create!(currency_params)
+    end
   end
 
   def update

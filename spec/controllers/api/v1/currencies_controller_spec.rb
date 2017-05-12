@@ -23,6 +23,17 @@ RSpec.describe Api::V1::CurrenciesController, type: :controller do
 
       it { expect(response).to have_http_status(422) }
     end
+
+    context 'currency is not created when one with the same code already exists' do
+      render_views
+
+      before do
+        post :create, params: { code: 'TEST', rate: 1.4 }, format: :json
+        post :create, params: { code: 'TEST', rate: 1.2 }, format: :json
+      end
+
+      it { expect(response.body).to include("1.4") }
+    end
   end
 
   describe "POST #update" do
