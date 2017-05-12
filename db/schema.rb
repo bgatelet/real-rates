@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170512180850) do
+ActiveRecord::Schema.define(version: 20170512203746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20170512180850) do
 
   create_table "currencies", id: :uuid, default: -> { "uuid_generate_v4()" }, force: :cascade do |t|
     t.string   "code"
-    t.decimal  "rate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

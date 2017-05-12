@@ -17,21 +17,13 @@ class Api::V1::CurrenciesController < ApplicationController
     end
   end
 
-  def update
-    @currency.update!(update_params)
-  end
-
   def show
   end
 
   private
 
   def currency_params
-    params.permit(:code, :rate)
-  end
-
-  def update_params
-    params.permit(:rate)
+    params.permit(:code)
   end
 
   def set_currency
