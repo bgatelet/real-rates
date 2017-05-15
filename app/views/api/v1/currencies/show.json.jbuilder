@@ -1,1 +1,1 @@
-json.(@currency, :code)
+json.(@currency, :id, :code)
