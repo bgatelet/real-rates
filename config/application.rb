@@ -31,11 +31,12 @@ module RealRates
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
-    # For testing; unsafe for production; edit later.
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
-        resource '*', :headers => :any, :methods => [:get, :post, :options]
+        origins 'localhost:8080'
+        resource '*',
+          :headers => :any,
+          :methods => [:get, :post, :put, :delete, :options]
       end
     end
 
