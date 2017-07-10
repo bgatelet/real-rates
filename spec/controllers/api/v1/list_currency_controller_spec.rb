@@ -8,7 +8,7 @@ RSpec.describe Api::V1::ListCurrencyController, type: :controller do
 
   describe "GET #destroy" do
     before do
-      delete :destroy, params: { list_id: list.id, currency_id: currency.id }, format: :json
+      delete :destroy, params: { list_id: list.id, code: currency.code }, format: :json
     end
 
     it { expect(response).to have_http_status(204) }
