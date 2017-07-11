@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       post 'sign_in', to: 'user_token#create'
       post 'sign_up', to: 'registrations#create'
       resource :users, only: [:update, :show]
-      resource :currencies, only: [:create, :update, :show]
+      resource :currencies, only: [:create, :show]
       delete 'list_currency/destroy'
     end
   end

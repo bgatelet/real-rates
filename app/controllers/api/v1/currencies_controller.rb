@@ -1,6 +1,5 @@
 class Api::V1::CurrenciesController < ApplicationController
   before_action :authenticate
-  before_action :set_currency, only: [:update, :show]
   respond_to :json
 
   def create
@@ -13,7 +12,8 @@ class Api::V1::CurrenciesController < ApplicationController
         @currency = potential_currency
       # Else create a link between the user's list and existing currency.
       else
-        ListCurrency.create!(list_id: current_user.list.id, currency_id: potential_currency.id)
+        list_currency = ListCurrency.create!(list_id: current_user.list.id, currency_id: potential_currency.id)
+        @currency = list_currency.currency
       end
     # Create the new currency if it doesn't already exist.
     else
@@ -22,15 +22,12 @@ class Api::V1::CurrenciesController < ApplicationController
   end
 
   def show
+    @currency = Currency.find(params[:id])
   end
 
   private
 
   def currency_params
     params.permit(:code)
-  end
-
-  def set_currency
-    @currency = Currency.find(params[:id])
   end
 end
