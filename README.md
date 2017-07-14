@@ -1,4 +1,6 @@
 # Real Rates
+Link to the [frontend  repo](https://github.com/bgatelet/real-rates-react).
+
 This app let’s you list all currencies that will be used on your trip (based on availability) and has an input for the actual exchange rate encountered that will show how much money is gained or lost compared to official exchange rate. Check it out [here](https://dist-cwvxoggxra.now.sh/#/).
 
 ## About
@@ -32,5 +34,3 @@ These dependencies are both used for gathering information on rates and displayi
 - Build a frontend testing suite that goes beyond just checking initial state and components.
 - Break up RateContainer into smaller pieces.
 - Remove localhost from CORS in production.
-
-Link to the [frontend  repo](https://github.com/bgatelet/real-rates-react).
