@@ -1,5 +1,6 @@
 # Real Rates
-Link to the [frontend  repo](https://github.com/bgatelet/real-rates-react).
+Link to the [frontend repo](https://github.com/bgatelet/real-rates-react).  
+Link to the [mobile app repo](https://github.com/bgatelet/real-rates-react-native).
 
 This app let’s you list all currencies that will be used on your trip (based on availability) and has an input for the actual exchange rate encountered that will show how much money is gained or lost compared to official exchange rate. Check it out [here](https://dist-cwvxoggxra.now.sh/#/).
 
